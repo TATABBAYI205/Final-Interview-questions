@@ -1,0 +1,45 @@
+package JAVA;
+
+import java.util.Scanner;
+
+public class Bank {
+	public static void main(String[] args) {	
+		int balance =10000,withdraw = 0 ,deposite,n; 
+		Scanner sc= new Scanner(System.in);	
+		while(true)
+		{
+			System.out.println("Welcome to BANK OF INDIA ");
+			System.out.println("1.Deposite");
+			System.out.println("2.Withdraw");
+			System.out.println("3.Check Balance");
+			System.out.println("4.Exit");
+			n=sc.nextInt();
+			switch(n)
+			{
+			case 1:
+				System.out.println("Enter Amount to deposite");
+				deposite = sc.nextInt();
+				balance=balance+deposite;
+				System.out.println("Balance Amount is : "+balance);
+				System.out.println("Money has been deposited successfully");
+				System.out.println(" ");
+				break;	
+			case 2:
+				System.out.println("Enter the money to be withdarw");
+				withdraw=sc.nextInt();
+				balance=balance-withdraw;
+				System.out.println("Available balance is : "+balance);
+				System.out.println("Money is withdraw successfully");
+				System.out.println(" ");
+				break;			
+			case 3:
+				System.out.println("Balance of your Account is : "+balance);
+				System.out.println(" ");
+				break;			
+			case 4:
+				System.exit(0);
+				System.out.println(" ");	
+			}
+		}
+	}
+}

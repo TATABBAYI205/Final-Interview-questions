@@ -1,0 +1,72 @@
+package JAVA;
+
+import java.util.Queue;
+import java.util.LinkedList;
+
+public class ProducerConsumer {
+	private Queue<Integer> queue = new LinkedList<>();
+    private final int MAX_SIZE = 10;
+	public static void main(String[] args) 
+	{
+		ProducerConsumer pc = new ProducerConsumer();
+        Thread producerThread = new Thread(() -> pc.producer());
+        Thread consumerThread = new Thread(() -> pc.consumer());
+        producerThread.start();
+        consumerThread.start();
+	}
+    public void producer() 
+    {
+        int i = 0;
+        while (true) 
+        {
+            synchronized (queue) 
+            {
+                while (queue.size() == MAX_SIZE) 
+                {
+                    try 
+                    {
+                        queue.wait();
+                    } 
+                    catch (InterruptedException e) 
+                    {
+                        e.printStackTrace();
+                    }
+                }
+                System.out.println("Producer produces: " + i);
+                queue.add(i++);
+                queue.notifyAll();      
+            }
+        }
+    }
+    public void consumer() 
+    {
+        while (true) 
+        {
+            synchronized (queue) 
+            {
+                while (queue.isEmpty()) 
+                {
+                    try 
+                    {
+                        queue.wait();
+                    } 
+                    catch (InterruptedException e) 
+                    {
+                        e.printStackTrace();
+                    }
+                }
+                int sum = 0;
+                while (!queue.isEmpty())
+                {
+                    sum += queue.poll();
+                }
+                System.out.println("Consumer consumes. Sum: " + sum);
+                queue.notifyAll();
+            }
+        }
+    }		        	    
+}
+
+
+
+

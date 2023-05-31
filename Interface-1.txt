@@ -1,0 +1,75 @@
+package JAVA;
+import java.util.Scanner;
+interface Shape
+{
+	double Area();
+    double Perimeter();
+}
+class Circle implements Shape 
+{
+    private double radius;
+    public Circle(double radius) 
+    {
+        this.radius = radius;
+    }
+    public double Area() 
+    {
+    	double area;
+    	float PI=3.14f;
+    	area =PI*radius*radius;
+        return area;
+    }
+    public double Perimeter()
+    {
+    	double perimeter ;
+    	float PI=3.14f;
+    	perimeter=2*PI*radius;
+        return perimeter;
+    }
+}
+class Triangle implements Shape 
+{
+    private double length;
+    private double breadth;
+    private double height;
+    public  Triangle(double length, double breadth, double height)
+    {
+        this.length= length;
+        this.breadth = breadth;
+        this.height = height;
+    }
+    public double Area() 
+    {
+        double area ;
+        area=0.5*breadth*height;
+        return area;
+    }
+    public double Perimeter() 
+    {
+    	double perimeter;
+    	perimeter=length+breadth+height;
+        return perimeter;
+    }
+}
+public class Main 
+{
+    public static void main(String[] args) 
+    {
+		Scanner sc= new Scanner(System.in);
+		System.out.println("Enter the radius of the circle : ");
+		double radius =sc.nextDouble();
+		Shape circle= new Circle(radius);
+		System.out.println("Area of the circle : "+circle.Area());
+		System.out.println("Perimeter of the circle : "+circle.Perimeter());
+		
+		System.out.println("Enter the Length of the Triangle : ");
+		double length=sc.nextDouble();
+		System.out.println("Enter the Breadth of the Triangle : ");
+		double breadth=sc.nextDouble();
+		System.out.println("Enter the Height of the Triangle : ");
+		double height=sc.nextDouble();
+		Shape triangle = new Triangle(length, breadth, height);
+		System.out.println("Area of the Triangle : "+triangle.Area());
+		System.out.println("Perimeter of the Triangle : "+triangle.Perimeter());
+	}        
+}

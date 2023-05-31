@@ -1,0 +1,65 @@
+package JAVA;
+
+abstract class Bike
+{
+	abstract void run();
+}
+class Honda extends Bike
+{
+	void run()
+	{
+		System.out.println("Running safely..");
+	}
+	public static void main(String[] args) {
+		Bike b= new Honda();
+		b.run();
+	}
+}
+interface Value
+{
+	int MIN=0;
+	int MAX=10;
+}
+class Number implements Value
+{
+	public static void main(String[] args) {
+		int nums[]= new int[MAX];		
+		for(int i=MIN;i<=10;i++)
+		{
+			if(i>MAX)
+				System.out.println("Out of Range");
+			else
+			{
+				nums[i]=i;
+				System.out.println(nums[i]+" ");
+			}
+		}
+	}
+}
+
+
+KeyPoints of Abstract class and Interface:
+==============================
+ Interface:
+
+> Multiple inheritance possible.
+> A class cann inherited any number of interfaces.
+> By default,all methods in an interface are public and abstract, No need to that keywords.
+> Interface have no implementation at all.
+> All methods of an interface need to be overriden.
+> All variable declared in an interface are by default public ,static, or final.
+> Interface do not have  any constructor.
+> Methods in an interface cannot be static.
+
+
+Abstract class:
+
+> Multiple inheritance not possible.
+> A class can inherit only one class.
+> Extends keyword is used to inherit a class.
+> Method have to  be tagged as public or abstract or both,if required.
+> Abstract classes can have partial implementation.
+> Only abstract methods need to be overridden.
+> Variables,if required ,have to be declared as public ,static ,or final.
+> Abstract classes can have constructors.
+> Non-abstract methods can be static.

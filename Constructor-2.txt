@@ -1,0 +1,38 @@
+package JAVA;
+class Parent
+{
+	public Parent()
+	{
+		System.out.println("Parent class constructor");
+	}
+}
+class Child extends Parent
+{
+	public Child()
+	{
+		super();
+		System.out.println("Child class constructor");
+	}
+}
+public class Test2
+{
+	public static void main(String[] args) 
+	{
+		Child ch= new Child();
+	}
+}
+
+
+
+
+
+Key points of Constructor:
+===================
+>  Constructor do not have any return type.
+> Constructor will have the same name as that class.
+> Invoked as soon as teh object is created and there after.
+> Constructor cannot be inherited.
+> Constructor can be overloaded.
+> Constructor can be private,protected,default or public.
+> Role of contructor is to initialize object.
+> Constructor cannot be abstract,final,static or sychronized

@@ -1,0 +1,46 @@
+package JAVA;
+public class EvenandOdd {
+    public static void main(String[] args)
+    {
+         EvenThread et = new EvenThread();
+         OddThread ot = new OddThread();
+        et.run();
+        ot.run();
+    }
+}
+class EvenThread extends EvenandOdd
+{
+    public void run() 
+    {
+        for (int i = 2; i <= 10; i += 2) 
+        {
+            System.out.println("Even: " + i);
+            try 
+            {
+                Thread.sleep(100);
+            } 
+            catch (Exception e)
+            {
+               System.out.println(e);
+            }
+        }
+    }
+}
+class OddThread extends EvenandOdd 
+{
+    public void run() 
+    {
+        for (int i = 1; i <= 10; i += 2) 
+        {
+            System.out.println("Odd: " + i);
+            try 
+            {
+                Thread.sleep(100);
+            } 
+            catch (Exception e)
+            {
+               System.out.println(e);
+            }
+        }
+    }
+}
