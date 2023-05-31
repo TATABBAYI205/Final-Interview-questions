@@ -1,0 +1,131 @@
+package JDBC;
+import java.sql.*;
+import java.util.Scanner;
+public class CRUDOperations {
+	static final String url = "jdbc:mysql://localhost:3306/mydatabase";
+    static final String username = "root";
+    static final String password = "Abbayi@2000";
+
+    public static void main(String[] args) 
+    {
+        try (Connection con = DriverManager.getConnection(url,username,password)) 
+        {
+            createTable(con);
+            Scanner scanner = new Scanner(System.in);
+            boolean exit = false;
+            while (!exit)
+            {
+                System.out.println("CRUD Application");
+                System.out.println("1. Add record");
+                System.out.println("2. View records");
+                System.out.println("3. Update record");
+                System.out.println("4. Delete record");
+                System.out.println("5. Exit");
+                System.out.print("Enter your choice: ");
+                int choice = scanner.nextInt();
+                scanner.nextLine();
+                switch (choice)
+                {
+                    case 1:
+                        addRecord(con, scanner);
+                        break;
+                    case 2:
+                        viewRecords(con);
+                        break;
+                    case 3:
+                        updateRecord(con, scanner);
+                        break;
+                    case 4:
+                        deleteRecord(con, scanner);
+                        break;
+                    case 5:
+                        exit = true;
+                        break;
+                    default:
+                        System.out.println("Invalid choice. Please try again.");
+                }
+                System.out.println();
+            }
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+    }
+    private static void createTable(Connection conn) throws SQLException
+    {
+        String sql = "CREATE TABLE IF NOT EXISTS records (" +"id INT AUTO_INCREMENT PRIMARY KEY," +"name VARCHAR(100)," +"age INT)";
+        try (Statement stmt = conn.createStatement()) 
+        {
+            stmt.executeUpdate(sql);
+        }
+    }
+    private static void addRecord(Connection con, Scanner scanner) throws SQLException 
+    {
+        System.out.print("Enter name: ");
+        String name = scanner.nextLine();
+        System.out.print("Enter age: ");
+        int age = scanner.nextInt();
+        scanner.nextLine();
+        String sql = "INSERT INTO records (name, age) VALUES (?, ?)";
+        try (PreparedStatement pstmt = con.prepareStatement(sql)) 
+        {
+            pstmt.setString(1, name);
+            pstmt.setInt(2, age);
+            int rowsAffected = pstmt.executeUpdate();
+            System.out.println(rowsAffected + " record(s) added.");
+        }
+    }
+    private static void viewRecords(Connection con) throws SQLException
+    {
+        String sql = "SELECT * FROM records";
+        try (Statement stmt = con.createStatement()) 
+        {
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) 
+            {
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                int age = rs.getInt("age");
+                System.out.println("ID: " + id + ", Name: " + name + ", Age: " + age);
+            }
+        }
+    }
+    private static void updateRecord(Connection con, Scanner scanner) throws SQLException
+    {
+        System.out.print("Enter the ID of the record to update: ");
+        int id = scanner.nextInt();
+        scanner.nextLine();
+        System.out.print("Enter new name: ");
+        String name = scanner.nextLine();
+        System.out.print("Enter new age: ");
+        int age = scanner.nextInt();
+        scanner.nextLine();
+
+        String sql = "UPDATE records SET name = ?, age = ? WHERE id = ?";
+        try (PreparedStatement pstmt = con.prepareStatement(sql)) 
+        {
+            pstmt.setString(1, name);
+            pstmt.setInt(2, age);
+            pstmt.setInt(3, id);
+            int rowsAffected = pstmt.executeUpdate();
+            System.out.println(rowsAffected + " record(s) updated.");
+        }
+    }
+    private static void deleteRecord(Connection con, Scanner scanner) throws SQLException
+    {
+        System.out.print("Enter the ID of the record to delete: ");
+        int id = scanner.nextInt();
+        scanner.nextLine();
+
+        String sql = "DELETE FROM records WHERE id = ?";
+        try (PreparedStatement pstmt = con.prepareStatement(sql)) 
+        {
+            pstmt.setInt(1, id);
+            int rowsAffected = pstmt.executeUpdate();
+            System.out.println(rowsAffected + " record(s) deleted.");
+        }
+    }
+}
+
+
